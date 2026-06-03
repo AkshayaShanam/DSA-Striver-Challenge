@@ -1,0 +1,36 @@
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int rowlength=matrix.length;
+        int collength=matrix[0].length;
+        int col=matrix[0][0];
+        for(int i=0;i<rowlength;i++){
+            for(int j=0;j<collength;j++){
+                if(matrix[i][j]==0){
+                    matrix[i][0]=0;
+                    if(j!=0){
+                        matrix[0][j]=0;
+                    }else{
+                        col=0;
+                    }
+                }
+            }
+        }
+        for(int i=rowlength-1;i>0;i--){
+            for(int j=collength-1;j>0;j--){
+                if(matrix[0][j]==0 || matrix[i][0]==0){
+                    matrix[i][j]=0;
+                }
+            }
+        }
+        if(matrix[0][0]==0){
+            for(int colindx=0;colindx<collength;colindx++){
+                    matrix[0][colindx]=0;
+            }
+        }
+        if(col==0){
+            for(int rowindx=0;rowindx<rowlength;rowindx++){
+                    matrix[rowindx][0]=0;
+            }
+        }
+    }
+}
