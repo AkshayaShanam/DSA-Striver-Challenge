@@ -1,0 +1,40 @@
+import java.util.*;
+public class RepeatingMissing {
+    public static int[] findMissingRepeatingNumbers(int[] nums) {
+        int n=nums.length; 
+        int xor=0;
+        for(int i=0;i<n;i++) {
+            xor=xor^nums[i];     
+            xor=xor^(i+1);     
+        }
+        int num=(xor&~(xor-1));
+        int zero=0,one=0;
+        for(int i=0;i<n;i++) {
+            if((nums[i]&num)!=0){
+                one^=nums[i];
+            }else{
+                zero^=nums[i];
+            }
+        }
+        for(int i=1;i<=n;i++) {
+            if((i&num)!=0){
+                one^=i;
+            }else{
+                zero^=i;
+            }
+        }
+        int cnt=0;
+        for(int val:nums) {
+            if(val==zero) cnt++;
+        }
+        if(cnt==2){
+            return new int[]{zero, one};
+        }
+        return new int[]{one,zero};
+    }
+    public static void main(String[] args) {
+        int[] nums={3,1,2,5,4,6,7,5};
+        int[] result=findMissingRepeatingNumbers(nums);
+        System.out.println("{"+result[0]+" "+result[1]+"}");
+    }
+}
