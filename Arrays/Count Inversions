@@ -1,0 +1,46 @@
+import java.util.*;
+public class CountInversions {
+    public static int merge(int[] arr, int start, int mid, int end) {
+        int[] sorted=new int[end-start+1];
+        int p=start;       
+        int q=mid+1;     
+        int idx=0;        
+        int inversions=0;
+        while(p<=mid&&q<= end) {
+            if(arr[p]<=arr[q]) {
+                sorted[idx++]=arr[p++];
+            }else{
+                sorted[idx++]=arr[q++];
+                inversions+=(mid-p+1);
+            }
+        }
+        while (p<=mid) sorted[idx++]=arr[p++];
+        while (q<=end) sorted[idx++]=arr[q++];
+        for(int i=start;i<=end;i++) {
+            arr[i]=sorted[i-start];
+        }
+        return inversions;
+    }
+    public static int mergeSort(int[] arr, int start, int end) {
+        int inversions = 0;
+
+        if (start >= end) return inversions;
+
+        int mid = (start + end) / 2;
+
+        inversions += mergeSort(arr, start, mid);
+        inversions += mergeSort(arr, mid + 1, end);
+        inversions += merge(arr, start, mid, end);
+
+        return inversions;
+    }
+
+    public static int numberOfInversions(int[] arr) {
+        return mergeSort(arr, 0, arr.length - 1);
+    }
+    public static void main(String[] args) {
+        int[] arr = {5, 4, 3, 2, 1};
+        int result =numberOfInversions(arr);
+        System.out.println(result);
+    }
+} 
