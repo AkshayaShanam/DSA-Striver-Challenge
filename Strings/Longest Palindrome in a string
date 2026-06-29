@@ -1,0 +1,25 @@
+class Solution {
+    public String Pal(String s,int left,int right){
+        while(left>=0 && right<s.length() && s.charAt(left)==s.charAt(right)){
+            left--;
+            right++;
+        }
+        return s.substring(left+1,right);
+    }
+    public String longestPalindrome(String s) {
+        int len=s.length();
+        if (len<=1) return s;
+        String str=s.substring(0,1);
+        for(int i=0;i<len;i++){
+            String OddPal=Pal(s,i,i);
+            String EvenPal=Pal(s,i,i+1);
+            if(OddPal.length()>str.length()){
+                str=OddPal;
+            }
+            if(EvenPal.length()>str.length()){
+                str=EvenPal;
+            }
+        }  
+        return str;
+    }
+}
