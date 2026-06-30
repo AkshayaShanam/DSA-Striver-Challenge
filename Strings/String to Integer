@@ -1,0 +1,33 @@
+class Solution {
+    public int helper(String s,int i,long res,int sign,boolean started){
+        if(i==s.length()){
+            return (int)res*sign;
+        }
+        char ch=s.charAt(i);
+        if(ch==' ' && !started){
+            return helper(s,i+1,res,sign,started);
+        }
+        if((ch=='+' || ch=='-') && !started){
+            int newsign= (ch=='-')? -1 : 1;
+            return helper(s,i+1,res,newsign,true);
+        }
+        if(Character.isDigit(ch)){
+            long newres=res*10 + (ch-'0');
+            if((newres*sign)>Integer.MAX_VALUE) return Integer.MAX_VALUE;
+            if((newres*sign)<Integer.MIN_VALUE) return Integer.MIN_VALUE;
+            return helper(s,i+1,newres,sign,true);
+        }
+        return (int)res*sign;
+    }
+    public int myAtoi(String s) {
+        int i=0;
+        long res=0;
+        int sign=1;
+        boolean started=false;
+        if(s.length()==i){
+            return (int)res*sign;
+        }else{
+            return helper(s,i,res,sign,started);
+        }
+    }
+}
