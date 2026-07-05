@@ -1,0 +1,41 @@
+import java.util.*;
+class TreeNode{
+    int val;
+    TreeNode left,right;
+    TreeNode(int val){
+        this.val=val;
+    }
+}
+public class NodePath{
+    static TreeNode buildTree(Scanner sc){
+        int val=sc.nextInt();
+        if(val==-1)
+            return null;
+        TreeNode root=new TreeNode(val);
+        root.left=buildTree(sc);
+        root.right=buildTree(sc);
+        return root;
+    }
+    static boolean findPath(TreeNode root,int target,ArrayList<Integer> path){
+        if(root==null)
+            return false;
+        path.add(root.val);
+        if(root.val==target)
+            return true;
+        if(findPath(root.left,target,path)||findPath(root.right,target,path))
+            return true;
+        path.remove(path.size()-1);
+        return false;
+    }
+
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        TreeNode root=buildTree(sc);
+        int target=sc.nextInt();
+        ArrayList<Integer> path=new ArrayList<>();
+        if(findPath(root,target,path))
+            System.out.println(path);
+        else
+            System.out.println("Node not found");
+    }
+}
